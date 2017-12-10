@@ -3,12 +3,23 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Reactium</title>
+        <title>Actinium Admin</title>
         <meta name="description" content="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="/assets/style/style.css">
     </head>
     <body>
-        <Component type="Router"></Component>
+        <Component type="DevTools"></Component>
+        <Component type="Topbar"></Component>
+        <div class="flex">
+            <aside>
+                <Component type="Sidebar"></Component>
+            </aside>
+            <main>
+                Content
+            </main>
+        </div>
         <script src="/assets/js/main.js"></script>
     </body>
 </html>
