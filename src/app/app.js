@@ -19,7 +19,7 @@ import DevTools from 'appdir/components/DevTools';
  * @description Redux setup
  * -----------------------------------------------------------------------------
  */
-let localizeState     = true;
+let localizeState     = false;
 let initialState      = {};
 const components      = [];
 const elements        = document.querySelectorAll('Component');

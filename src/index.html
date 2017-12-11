@@ -11,14 +11,14 @@
     </head>
     <body>
         <Component type="DevTools"></Component>
-        <Component type="Topbar"></Component>
-        <div class="flex">
-            <aside>
-                <Component type="Sidebar"></Component>
-            </aside>
-            <main>
-                Content
-            </main>
+        <div id="admin-container">
+            <Component id="admin-topbar" type="Topbar"></Component>
+            <div class="flex fullwidth fullheight">
+                <Component id="admin-sidebar" type="Sidebar"></Component>
+                <main id="admin-content">
+                    Content
+                </main>
+            </div>
         </div>
         <script src="/assets/js/main.js"></script>
     </body>

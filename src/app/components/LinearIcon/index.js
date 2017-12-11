@@ -1,24 +1,20 @@
+
 /**
  * -----------------------------------------------------------------------------
  * Imports
  * -----------------------------------------------------------------------------
  */
-import { createMuiTheme } from 'material-ui/styles';
-import * as Color from 'material-ui/colors';
+import React from 'react';
 
 
 /**
  * -----------------------------------------------------------------------------
- * The app theme
+ * Functional Component: LinearIcon
  * -----------------------------------------------------------------------------
  */
-const Theme = createMuiTheme({
-    palette: {
-        primary: {...Color.blueGrey},
-        secondary: {...Color.red},
-    },
-});
+const LinearIcon = (props) => {
+    let classes = `lnr-${props.name} ${props.className}`;
+    return (<i className={classes} style={props.style} />);
+};
 
-Theme.palette.primary[500] = Color.lightBlue[700];
-
-export default Theme;
+export default LinearIcon;
