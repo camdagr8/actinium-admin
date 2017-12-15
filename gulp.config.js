@@ -42,39 +42,62 @@ module.exports = () => {
         watch: {
             js: [
                 "src/app/**/*",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
             markup: [
                 "src/**/*.html",
-                "src/assets/style/**/*.css"
+                "src/assets/style/**/*.css",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
             style: [
                 "src/assets/style/**/*.less",
                 "src/assets/style/**/*.scss",
                 "src/assets/style/**/*.sass",
+                "src/assets/design-system/src/assets/toolkit/styles/**/*.scss",
             ],
             assets: [
                 "src/assets/**/*",
                 "!{src/assets/style,src/assets/style/**}",
-                "!{src/assets/js,src/assets/js/**}"
+                "!{src/assets/js,src/assets/js/**}",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
+            toolkit: {
+                assets: [
+                    "src/assets/design-system/src/assets/toolkit/**",
+                    "!{src/assets/design-system/src/assets/toolkit/scripts,src/assets/design-system/src/assets/toolkit/scripts/**}",
+                    "!{src/assets/design-system/src/assets/toolkit/styles,src/assets/design-system/src/assets/toolkit/styles/**}",
+                ],
+            },
         },
         src: {
             js: [
                 "src/app/**/*",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
             markup: [
                 "src/**/*.html",
+                "!src/assets/design-system/**",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
             style: [
                 "src/assets/style/*.less",
                 "src/assets/style/*.scss",
                 "src/assets/style/*.sass",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
             assets: [
                 "src/assets/**/*",
                 "!{src/assets/style,src/assets/style/**}",
-                "!{src/assets/js,src/assets/js/**}"
+                "!{src/assets/js,src/assets/js/**}",
+                "!{src/assets/design-system,src/assets/design-system/**}",
             ],
+            toolkit: {
+                assets: [
+                    "src/assets/design-system/src/assets/toolkit/**",
+                    "!{src/assets/design-system/src/assets/toolkit/scripts,src/assets/design-system/src/assets/toolkit/scripts/**}",
+                    "!{src/assets/design-system/src/assets/toolkit/styles,src/assets/design-system/src/assets/toolkit/styles/**}",
+                ],
+            },
             includes: "./node_modules",
             appdir: path.resolve(__dirname, 'src/app'),
             rootdir: path.resolve(__dirname),
