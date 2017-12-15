@@ -4,7 +4,7 @@
 import * as Color from 'material-ui/colors';
 
 const maxWidth = 280;
-const minWidth = 70;
+const minWidth = 62;
 
 export default {
     maxWidth: maxWidth,
