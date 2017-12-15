@@ -1,0 +1,4 @@
+[submodule "src/assets/toolkit"]
+	path = src/assets/toolkit
+	url = https://github.com/Atomic-Reactor/Toolkit.git
+	branch = master
