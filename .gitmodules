@@ -1,0 +1,4 @@
+[submodule "actinium-admin-toolkit"]
+	path = actinium-admin-toolkit
+	url = git@github.com:camdagr8/actinium-admin-toolkit.git
+	branch = master

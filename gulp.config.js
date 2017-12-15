@@ -25,6 +25,7 @@ module.exports = () => {
         entries: entries("src/app/*.js"),
         defines: {
             "global": "window",
+            "log": "console.log",
             restAPI: JSON.stringify(process.env.REST_API_URL || "http://demo3914762.mockable.io"),
             allInitialStates: JSON.stringify(globDefineFiles('src/app/components/**/state.js')),
             allRoutes: JSON.stringify(globDefineFiles('src/app/components/**/route.js')),
@@ -37,6 +38,7 @@ module.exports = () => {
         port: {
             browsersync: 3030,
         },
+        cssPreProcessor: 'sass',
         watch: {
             js: [
                 "src/app/**/*",
@@ -48,6 +50,7 @@ module.exports = () => {
             style: [
                 "src/assets/style/**/*.less",
                 "src/assets/style/**/*.scss",
+                "src/assets/style/**/*.sass",
             ],
             assets: [
                 "src/assets/**/*",
@@ -63,7 +66,9 @@ module.exports = () => {
                 "src/**/*.html",
             ],
             style: [
-                "src/assets/style/*.scss"
+                "src/assets/style/*.less",
+                "src/assets/style/*.scss",
+                "src/assets/style/*.sass",
             ],
             assets: [
                 "src/assets/**/*",
