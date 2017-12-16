@@ -1,7 +1,7 @@
 import { actionTypes } from 'appdir/app';
 
 export default {
-    updateRoute: (location, route = {}, params) => (dispatch, getState) => {
+    updateRoute: (location, route = {}, params, history) => (dispatch, getState) => {
         const { Router } = getState();
 
         if ( Router.pathname !== location.pathname ) {
@@ -11,6 +11,7 @@ export default {
         dispatch({
             type: actionTypes.UPDATE_ROUTE,
             location,
+            history,
         });
 
         // load route data

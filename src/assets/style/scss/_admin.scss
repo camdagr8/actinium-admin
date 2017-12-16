@@ -49,12 +49,20 @@
         padding: 0;
     }
 
+    li {
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
+    }
+
     li[role="button"] {
         border-left: 2px solid #37474F;
     }
 
     li[role="button"].active {
         border-left: 2px solid #03A9F4;
+        border-top: 1px solid #292929;
+        border-bottom: 1px solid #292929;
+        background-color: rgba(0, 0, 0, 0.125);
     }
 
     > div {

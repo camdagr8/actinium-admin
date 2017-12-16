@@ -104,7 +104,7 @@ gulp.task('serve', () => {
         notify: false,
         timestamps: true,
         server: path.resolve(config.dest.dist),
-        startPath: index,
+        startPath: '/admin',
         port: config.port.browsersync,
         logPrefix: '00:00:00',
         ui: {port: config.port.browsersync + 1},

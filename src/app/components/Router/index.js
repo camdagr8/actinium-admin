@@ -1,19 +1,53 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import RouteObserver from './RouteObserver';
 import { routes } from 'appdir/app';
+import Chrome from 'appdir/components/Chrome';
+import Dashboard from 'appdir/components/Dashboard';
+import _ from 'underscore';
 
 export default class AppRouter extends Component {
+
+    // Add order property greater than 0 to route
+    // to weight it down (have it evaluate later)
+    sortRoutes(routes) {
+        return _.sortBy(Object.keys(routes).map((route) => {
+            return Object.assign(
+                {},
+                routes[route],
+                {
+                    key: route,
+                    order: routes[route]['order'] || 0
+                },
+            );
+        }), 'order');
+    }
+
     render() {
         return (
             <Router>
-                <main>
+                <div>
                     <RouteObserver />
+                    <Chrome>
+                        <Switch>
+                            {
+                                this.sortRoutes(routes).map((route) => {
+                                    if (typeof route.path === 'string') {
+                                        return (<Route {...route} />);
+                                    }
 
-                    {Object.keys(routes).map(route => (
-                        <Route key={route} {...routes[route]} />
-                    ))}
-                </main>
+                                    if (Array.isArray(route.path)) {
+                                        return route.path.map((p) => {
+                                            let params = Object.assign({}, route, {path: p});
+                                            return <Route {...params} />;
+                                        });
+                                    }
+                                })
+                            }
+                            <Route component={Dashboard} />
+                        </Switch>
+                    </Chrome>
+                </div>
             </Router>
         );
     }

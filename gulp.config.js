@@ -20,7 +20,7 @@ const globDefineFiles = pattern => globby.sync(pattern)
 
 module.exports = () => {
     return {
-        spa: false,
+        spa: true,
         env: "development",
         entries: entries("src/app/*.js"),
         defines: {

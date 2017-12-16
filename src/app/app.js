@@ -21,51 +21,75 @@ import DevTools from 'appdir/components/DevTools';
  */
 let localizeState     = false;
 let initialState      = {};
-const components      = [];
-const elements        = document.querySelectorAll('Component');
+let bindPoints        = [];
+const elements        = Array.prototype.slice.call(document.querySelectorAll('component'));
 
-if (elements.length > 0) {
-    elements.forEach((elm) => {
 
-        let req, comp;
-        let cname = elm.getAttribute('type');
+export const getComponents = (types) => {
+    let cmps = {};
 
-        if (!cname) { return; }
+    types = (typeof types === 'string') ? [types] : types;
+    types.forEach((cname) => {
+        let req, cpath;
 
         let paths = [
-            `./components/${cname}`,
-            `./components/${cname}/index`,
+            cname,
+            `${cname}/index`,
+            `components/${cname}`,
+            `components/${cname}/index`,
+            `components/common-ui/${cname}`,
+            `components/common-ui/${cname}/index`,
         ];
 
         while (!req && paths.length > 0) {
-            comp = paths.shift();
+            cpath = paths.shift();
 
-            try { req = require(comp + ''); } catch (err) { }
+            try { req = require('appdir/' + cpath); } catch (err) { }
+            if (!req) {
+                try { req = require(cpath + ''); } catch (err) { }
+            }
 
             if (req) {
                 if (req.hasOwnProperty('default')) {
                     req = req.default;
                 }
+                break;
             }
         }
 
-        if (!req) {
-            console.log(`${cname} component does not exist`);
-            elm.innerHTML = '';
-        } else {
-
-            // Get parameters from container element
-            let params = {};
-            Object.entries(elm.attributes).forEach(([key, attr]) => {
-                if ( key !== 'type') {
-                    params[attr.name] = attr.value;
-                }
-            });
-
-            // Create the React element and apply parameters
-            let cmp = React.createElement(req, params);
-            components.push({component: cmp, element: elm});
+        if (req) {
+            cmps[cname] = req;
         }
+    });
+
+    return cmps;
+};
+
+
+if (elements.length > 0) {
+
+    let types = elements.map((elm) => { return elm.getAttribute('type'); });
+    let components = getComponents(types);
+
+    elements.forEach((elm) => {
+        // Get the component type
+        let type = elm.getAttribute('type');
+
+        if (!components.hasOwnProperty(type)) {
+            return;
+        }
+
+        // Get parameters from container element
+        let params = {};
+        Object.entries(elm.attributes).forEach(([key, attr]) => {
+            if ( key !== 'type') {
+                params[attr.name] = attr.value;
+            }
+        });
+
+        // Create the React element and apply parameters
+        let cmp = React.createElement(components[type], params);
+        bindPoints.push({component: cmp, element: elm});
     });
 }
 
@@ -119,7 +143,7 @@ const sanitizeInitialState = state => Object.keys(state)
  * -----------------------------------------------------------------------------
  */
 export const App = () => {
-    if (components.length > 0) {
+    if (bindPoints.length > 0) {
 
         // Load middleware
         let middleWare = [thunk];
@@ -155,7 +179,7 @@ export const App = () => {
         const store = createStoreWithMiddleware(rootReducer, initialState, storeEnhancer);
 
         // Render the React Components
-        components.forEach((item) => {
+        bindPoints.forEach((item) => {
             ReactDOM.render(
                 <Provider store={store}>
                     <div>

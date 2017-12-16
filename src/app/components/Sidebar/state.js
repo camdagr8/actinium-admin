@@ -26,40 +26,33 @@ export default {
             width: maxWidth,
         }
     },
-    items: {
-        top: [
-            {
-                "index": 0,
-                "label": "Dashboard",
-                "url": "/admin",
-                "icon": "desktop",
-                "className": "active",
-            },
-        ],
-        middle: [
-            {
-                "index": 10,
-                "label": "Pages",
-                "new": "/admin/page",
-                "url": "/admin/pages",
-                "icon": "file-empty",
-            },
-            {
-                "index": 11,
-                "label": "Templates",
-                "new": "/admin/template",
-                "url": "/admin/templates",
-                "icon": "file-code",
-            },
-        ],
-        bottom: [
-            {
-                "index": 12,
-                "label": "Users",
-                "new": "/admin/user",
-                "url": "/admin/users",
-                "icon": "users2",
-            }
-        ],
-    }
+    items: [
+        {
+            "label": "Dashboard",
+            "url": "/admin",
+            "icon": "desktop",
+        },
+        {
+            "label": "Content",
+            "new": "/admin/content/new",
+            "url": "/admin/content",
+            "icon": "folder",
+        },
+        {
+            "label": "Media Library",
+            "url": "/admin/media-library",
+            "icon": "camera2",
+        },
+        {
+            "label": "Users",
+            "new": "/admin/user",
+            "url": "/admin/users",
+            "icon": "users2",
+        },
+        {
+            "label": "Settings",
+            "url": "/admin/settings",
+            "icon": "equalizer",
+        },
+    ],
 };

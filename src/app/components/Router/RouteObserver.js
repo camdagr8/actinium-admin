@@ -10,7 +10,7 @@ class RouteObserver extends Component {
      * e.g. appdir/product-page/route
      */
     processRoute() {
-        const { location, Router, updateRoute } = this.props;
+        const { location, Router, updateRoute, history } = this.props;
 
         if ( ! Router.pathname || location.pathname !== Router.pathname ) {
             let [ route ] = Object.keys(routes).map(r => routes[r]).filter(route => {
@@ -24,7 +24,8 @@ class RouteObserver extends Component {
                 updateRoute(
                     location,
                     route,
-                    routeParams
+                    routeParams,
+                    history,
                 );
             }
         }
@@ -57,6 +58,6 @@ const mapStateToProps = ({Router = {
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateRoute: (location, route, params) => dispatch(actions.Router.updateRoute(location, route, params)),
+    updateRoute: (location, route, params, history) => dispatch(actions.Router.updateRoute(location, route, params, history)),
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RouteObserver));

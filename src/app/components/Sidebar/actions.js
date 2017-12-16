@@ -78,5 +78,10 @@ export default {
 
     open: (animate) => (dispatch, getState) => {
         open(dispatch, getState, animate);
+    },
+
+    navigateTo: (url) => (dispatch, getState) => {
+        let state = getState().Sidebar;
+        state.history.push(url);
     }
 };
