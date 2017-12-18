@@ -2,7 +2,8 @@ import { actionTypes } from 'appdir/app';
 
 export default {
     updateRoute: (location, route = {}, params, history) => (dispatch, getState) => {
-        const { Router } = getState();
+        let state = getState();
+        const { Router } = state;
 
         if ( Router.pathname !== location.pathname ) {
             window.scrollTo(0,0);

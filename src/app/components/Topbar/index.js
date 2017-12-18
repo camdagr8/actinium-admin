@@ -58,7 +58,7 @@ class Topbar extends Component {
         let styles = this.state.styles;
         return (
             <MuiThemeProvider theme={Theme}>
-                <AppBar position="static">
+                <AppBar position="static" id="admin-topbar">
                     <Toolbar>
                         <IconButton style={styles.menuButton} color="contrast" aria-label="Menu" onClick={this.menuToggle.bind(this)}>
                             <LinearIcon name="menu" />

@@ -7,7 +7,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'appdir/app';
-
+import Ribbon from 'appdir/components/Ribbon';
+import LinearIcon from 'appdir/components/LinearIcon';
+import ExpansionPanel, {
+    ExpansionPanelSummary,
+    ExpansionPanelDetails,
+} from 'material-ui/ExpansionPanel';
+import Typography from 'material-ui/Typography';
 
 /**
  * -----------------------------------------------------------------------------
@@ -39,10 +45,31 @@ class ContentEditor extends Component {
         });
     }
 
+    onCollapseToggle(e, expanded) {
+        log(expanded);
+    }
+
     render() {
+        let self = this;
         return (
             <div>
-            Content Editor
+                <Ribbon />
+                <div className="hbox">
+                    <div className="vbox" style={{width: 320, overflowY: 'auto'}}>
+                        <div>
+                            Top
+                        </div>
+                        <div>
+                            middle
+                        </div>
+                    </div>
+                    <div className="panel">
+                        Preview
+                    </div>
+                    <div className="affix-bottom" style={{width: 320}}>
+                        Bottom Bar
+                    </div>
+                </div>
             </div>
         );
     }

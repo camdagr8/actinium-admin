@@ -1,3 +1,4 @@
 export default {
     UPDATE_ROUTE: 'UPDATE_ROUTE',
+    COMPLETED_ROUTE: 'COMPLETED_ROUTE',
 };

@@ -7,30 +7,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'appdir/app';
-import Ribbon from 'appdir/components/Ribbon';
+import LinearIcon from 'appdir/components/LinearIcon';
+import Typography from 'material-ui/Typography';
+
 
 /**
  * -----------------------------------------------------------------------------
- * React Component: Dashboard
+ * React Component: Ribbon
  * -----------------------------------------------------------------------------
  */
 const mapStateToProps = (state, props) => {
-    return Object.assign({}, state['Dashboard'], props);
+    return Object.assign({}, state['Ribbon'], props);
 };
 
-const mapDispatchToProps = (dispatch, props) => ({
-    mount: () => dispatch(actions.Dashboard.mount(props)),
+const mapDispatchToProps = (dispatch) => ({
+    mount: (props) => dispatch(actions.Ribbon.mount(props)),
 });
 
-class Dashboard extends Component {
+class Ribbon extends Component {
     constructor(props) {
         super(props);
-
         this.state = Object.assign({}, this.props);
     }
 
     componentDidMount() {
-        this.props.mount(this.props);
+        this.props.mount();
     }
 
     componentWillReceiveProps(nextProps) {
@@ -40,15 +41,14 @@ class Dashboard extends Component {
     }
 
     render() {
-        return (
-            <div className="flex-grow">
-                <Ribbon />
-                <div>
 
-                </div>
-            </div>
+        return (
+            <header className="ribbon">
+                <LinearIcon name={this.state.icon} style={{fontSize: 42}} />
+                <Typography type="headline">{this.state.label}</Typography>
+            </header>
         );
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Ribbon);

@@ -13,8 +13,12 @@ import React from 'react';
  * -----------------------------------------------------------------------------
  */
 const LinearIcon = (props) => {
-    let classes = `lnr-${props.name} ${props.className}`;
-    return (<i className={classes} style={props.style} />);
+    if (typeof props['name'] !== 'undefined') {
+        let classes = `lnr-${props.name} ${props.className}`;
+        return (<i className={classes} style={props.style} />);
+    } else {
+        return null;
+    }
 };
 
 export default LinearIcon;

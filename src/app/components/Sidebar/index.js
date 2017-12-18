@@ -10,7 +10,6 @@ import { actions } from 'appdir/app';
 import Skeleton from 'react-loading-skeleton';
 import LinearIcon from 'appdir/components/LinearIcon';
 import IconButton from 'material-ui/IconButton';
-import Divider from 'material-ui/Divider';
 import List, { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List';
 import _ from 'underscore';
 
@@ -25,34 +24,16 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     mount: (data) => dispatch(actions.Sidebar.mount(data)),
-    navigateTo: (url) => dispatch(actions.Sidebar.navigateTo(url)),
+    navigateTo: (url) => {
+        dispatch(actions.Sidebar.navigateTo(url));
+    },
+    change: (data) => {
+        dispatch(actions.Sidebar.change(data));
+    }
 });
 
 class Sidebar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = Object.assign({}, this.props);
-    }
-
-    componentDidMount() {
-        this.props.mount({refs: this.refs});
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState((prevState) => {
-            return Object.assign({}, prevState, nextProps);
-        });
-    }
-
-    onAddClick(data) {
-        this.props.navigateTo(data.new);
-    }
-
-    onLinkClick(data) {
-        this.props.navigateTo(data.url);
-    }
-
-    isActive(current, paths) {
+    static isActive(current, paths) {
 
         paths = (typeof paths === 'string') ? [paths] : paths;
 
@@ -87,6 +68,31 @@ class Sidebar extends Component {
         }
     }
 
+    constructor(props) {
+        super(props);
+        this.state = Object.assign({}, this.props);
+    }
+
+    componentDidMount() {
+        this.props.mount({refs: this.refs});
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState((prevState) => {
+            return Object.assign({}, prevState, nextProps);
+        });
+    }
+
+    onAddClick(data) {
+        this.props.change(data);
+        this.props.navigateTo(data.new);
+    }
+
+    onLinkClick(data) {
+        this.props.change(data);
+        this.props.navigateTo(data.url);
+    }
+
     renderItems(items) {
 
         if (items.length < 1) {
@@ -98,11 +104,13 @@ class Sidebar extends Component {
                 );
             });
         } else {
-            let current = (this.state.hasOwnProperty('history')) ? this.state.history.location.pathname : undefined;
-            let active = false;
-            let activeSet = false;
-
             return items.map((item, i) => {
+                let onclick = (item.hasOwnProperty('url')) ? this.onLinkClick.bind(this, item) : null;
+                let cname = null;
+
+                if (this.state.selected !== null) {
+                    cname = (this.state.selected.index === i) ? 'active' : cname;
+                }
 
                 let icon = (item.hasOwnProperty('icon'))
                     ? (
@@ -112,37 +120,21 @@ class Sidebar extends Component {
                     )
                     : '';
 
-                let add = (item.hasOwnProperty('new'))
+                let addBtn = (item.hasOwnProperty('new'))
                     ? (
                         <ListItemSecondaryAction>
-                            <IconButton aria-label="Delete" onClick={this.onAddClick.bind(this, item)}>
+                            <IconButton aria-label={`add ${item.label}`} onClick={this.onAddClick.bind(this, item)}>
                                 <LinearIcon name="plus" className="sm" />
                             </IconButton>
                         </ListItemSecondaryAction>
                     )
                     : '';
 
-                if (current) {
-                    let paths = [];
-                    if (item.hasOwnProperty('new')) {
-                        paths.push(item.new);
-                    }
-
-                    if (item.hasOwnProperty('url')) {
-                        paths.push(item.url);
-                    }
-
-                    active = (activeSet !== true) ? this.isActive(current, paths) : false;
-                    activeSet = (active === true) ? true : activeSet;
-                }
-
-                let cname = (active === true) ? 'active' : null;
-                let onclick = (item.hasOwnProperty('url')) ? this.onLinkClick.bind(this, item) : null;
                 return (
                     <ListItem className={cname} button={item.hasOwnProperty('url')} key={'item-' + i} onClick={onclick}>
                         {icon}
                         <ListItemText primary={item.label} style={this.state.style.text} />
-                        {add}
+                        {addBtn}
                     </ListItem>
                 )
             });
@@ -160,5 +152,26 @@ class Sidebar extends Component {
     }
 }
 
+export const selected = (current, items) => {
+    let output = null;
+
+    for (let i = 0; i < items.length; i++) {
+        let paths    = [];
+        let item     = items[i];
+
+        if (item.hasOwnProperty('url')) { paths.push(item.url); }
+        if (item.hasOwnProperty('new')) { paths.push(item.new); }
+
+        if (Sidebar.isActive(current, paths) === true) {
+            item['index'] = i;
+            output = item;
+            break;
+        }
+    }
+
+    output = (output === null) ? Object.assign({}, items[0], {index: 0}) : output;
+
+    return output;
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

@@ -143,6 +143,7 @@ const sanitizeInitialState = state => Object.keys(state)
  * -----------------------------------------------------------------------------
  */
 export const App = () => {
+
     if (bindPoints.length > 0) {
 
         // Load middleware
@@ -190,4 +191,5 @@ export const App = () => {
             );
         });
     }
+
 };

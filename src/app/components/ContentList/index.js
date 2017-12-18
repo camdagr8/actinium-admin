@@ -7,6 +7,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from 'appdir/app';
+import Ribbon from 'appdir/components/Ribbon';
+
 
 
 /**
@@ -18,7 +20,7 @@ const mapStateToProps = (state, props) => {
     return Object.assign({}, state['ContentList'], props);
 };
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapDispatchToProps = (dispatch) => ({
     mount: () => dispatch(actions.ContentList.mount()),
 });
 
@@ -41,8 +43,8 @@ class ContentList extends Component {
 
     render() {
         return (
-            <div>
-            Content List
+            <div className="flex-grow">
+                <Ribbon />
             </div>
         );
     }

@@ -4,7 +4,7 @@ import { actions } from 'appdir/app';
 export default {
     order: 1,
     path: '/admin/content',
-    exact: true,
+    exact: false,
     component: ContentList,
     load: params => actions.ContentList.mount(params),
 };

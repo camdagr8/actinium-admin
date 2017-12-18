@@ -80,6 +80,10 @@ export default {
         open(dispatch, getState, animate);
     },
 
+    change: (data) => (dispatch) => {
+        dispatch({type: actionTypes.SIDEBAR_CHANGE, selected: data});
+    },
+
     navigateTo: (url) => (dispatch, getState) => {
         let state = getState().Sidebar;
         state.history.push(url);
